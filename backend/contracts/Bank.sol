@@ -35,4 +35,7 @@ contract Bank {
         emit etherDeposited(msg.sender, msg.value);
     }
 
+    fallback() external payable {}
+
+    receive() external payable {}
 }
