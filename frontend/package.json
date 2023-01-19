@@ -13,10 +13,12 @@
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@next/font": "13.1.2",
+    "@rainbow-me/rainbowkit": "^0.8.1",
     "ethers": "^5.7.2",
     "framer-motion": "^8.4.3",
     "next": "13.1.2",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "wagmi": "^0.10.11"
   }
 }
