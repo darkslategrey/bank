@@ -1,0 +1,182 @@
+{
+  "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "etherDeposited",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "etherWithdrawed",
+      "type": "event"
+    },
+    {
+      "stateMutability": "payable",
+      "type": "fallback"
+    },
+    {
+      "inputs": [],
+      "name": "deposit",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getBalanceAndLastDeposit",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "balance",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "lastDeposit",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct Bank.Account",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "withdraw",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "stateMutability": "payable",
+      "type": "receive"
+    }
+  ],
+  "transactionHash": "0x4117503304a21cb18ee5003f5a8a4b2e8134ebde5e511fe7f7fe71841f01e5a9",
+  "receipt": {
+    "to": null,
+    "from": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+    "contractAddress": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+    "transactionIndex": 0,
+    "gasUsed": "466028",
+    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0xf8f7b860cbe92c51d858093ef6fa0d4aa71ac88f609ac7775c56eabf37f0c48c",
+    "transactionHash": "0x4117503304a21cb18ee5003f5a8a4b2e8134ebde5e511fe7f7fe71841f01e5a9",
+    "logs": [],
+    "blockNumber": 1,
+    "cumulativeGasUsed": "466028",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [],
+  "numDeployments": 1,
+  "solcInputHash": "863ae1877df43dbf4754b80e73e529a3",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.17+commit.8df45f5f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"etherDeposited\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"etherWithdrawed\",\"type\":\"event\"},{\"stateMutability\":\"payable\",\"type\":\"fallback\"},{\"inputs\":[],\"name\":\"deposit\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getBalanceAndLastDeposit\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"balance\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"lastDeposit\",\"type\":\"uint256\"}],\"internalType\":\"struct Bank.Account\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_amount\",\"type\":\"uint256\"}],\"name\":\"withdraw\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"stateMutability\":\"payable\",\"type\":\"receive\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/Bank.sol\":\"Bank\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"contracts/Bank.sol\":{\"content\":\"// SPDX-License-Identifier: UNLICENSED\\npragma solidity ^0.8.17;\\n\\ncontract Bank {\\n\\n    struct Account {\\n        uint balance;\\n        uint lastDeposit;\\n    }\\n\\n    mapping(address => Account) accounts;\\n\\n    event etherDeposited(address indexed account, uint amount);\\n    event etherWithdrawed(address indexed account, uint amount);\\n\\n    function getBalanceAndLastDeposit() external view returns(Account memory) {\\n        return accounts[msg.sender];\\n    }\\n\\n    function withdraw(uint _amount) external {\\n        // int rest = int(accounts[msg.sender].balance) - int(_amount);\\n        // require(rest >= 0, \\\"Not enough funds\\\");\\n        //OU \\n        require(accounts[msg.sender].balance >= _amount, \\\"Not enough funds\\\");\\n        accounts[msg.sender].balance -= _amount;\\n        (bool received, ) = msg.sender.call{value: _amount}(\\\"\\\");\\n        require(received, \\\"An error occured\\\");\\n        emit etherWithdrawed(msg.sender, _amount);\\n    }\\n\\n    function deposit() external payable {\\n        require(msg.value > 0, \\\"Not enough funds deposited\\\");\\n        accounts[msg.sender].balance += msg.value;\\n        accounts[msg.sender].lastDeposit = block.timestamp;\\n        emit etherDeposited(msg.sender, msg.value);\\n    }\\n\\n    fallback() external payable {}\\n\\n    receive() external payable {}\\n}\\n\",\"keccak256\":\"0xfd5df86a9647d60370668f9f5af54101eb9860d400bcb9fd213999ddd220c19b\",\"license\":\"UNLICENSED\"}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b50610781806100206000396000f3fe6080604052600436106100385760003560e01c80632e1a7d4d1461004157806358d9600c1461006a578063d0e30db0146100955761003f565b3661003f57005b005b34801561004d57600080fd5b5061006860048036038101906100639190610469565b61009f565b005b34801561007657600080fd5b5061007f610279565b60405161008c91906104d4565b60405180910390f35b61009d6102e3565b005b806000803373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020600001541015610123576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040161011a9061054c565b60405180910390fd5b806000803373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019081526020016000206000016000828254610174919061059b565b9250508190555060003373ffffffffffffffffffffffffffffffffffffffff16826040516101a190610600565b60006040518083038185875af1925050503d80600081146101de576040519150601f19603f3d011682016040523d82523d6000602084013e6101e3565b606091505b5050905080610227576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040161021e90610661565b60405180910390fd5b3373ffffffffffffffffffffffffffffffffffffffff167f47ed555d8b6242a89fcdab94795dc91c98a0e46db88f4a2b2bda3371956fd0d08360405161026d9190610690565b60405180910390a25050565b610281610414565b6000803373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060405180604001604052908160008201548152602001600182015481525050905090565b60003411610326576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040161031d906106f7565b60405180910390fd5b346000803373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060000160008282546103779190610717565b92505081905550426000803373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020600101819055503373ffffffffffffffffffffffffffffffffffffffff167f4de483450f36dd8489373cf9166b2260f09ae72422d836e12fd9565cec1cb91e3460405161040a9190610690565b60405180910390a2565b604051806040016040528060008152602001600081525090565b600080fd5b6000819050919050565b61044681610433565b811461045157600080fd5b50565b6000813590506104638161043d565b92915050565b60006020828403121561047f5761047e61042e565b5b600061048d84828501610454565b91505092915050565b61049f81610433565b82525050565b6040820160008201516104bb6000850182610496565b5060208201516104ce6020850182610496565b50505050565b60006040820190506104e960008301846104a5565b92915050565b600082825260208201905092915050565b7f4e6f7420656e6f7567682066756e647300000000000000000000000000000000600082015250565b60006105366010836104ef565b915061054182610500565b602082019050919050565b6000602082019050818103600083015261056581610529565b9050919050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052601160045260246000fd5b60006105a682610433565b91506105b183610433565b92508282039050818111156105c9576105c861056c565b5b92915050565b600081905092915050565b50565b60006105ea6000836105cf565b91506105f5826105da565b600082019050919050565b600061060b826105dd565b9150819050919050565b7f416e206572726f72206f63637572656400000000000000000000000000000000600082015250565b600061064b6010836104ef565b915061065682610615565b602082019050919050565b6000602082019050818103600083015261067a8161063e565b9050919050565b61068a81610433565b82525050565b60006020820190506106a56000830184610681565b92915050565b7f4e6f7420656e6f7567682066756e6473206465706f7369746564000000000000600082015250565b60006106e1601a836104ef565b91506106ec826106ab565b602082019050919050565b60006020820190508181036000830152610710816106d4565b9050919050565b600061072282610433565b915061072d83610433565b92508282019050808211156107455761074461056c565b5b9291505056fea2646970667358221220f8f86391edc3111918f1a3cf2e35d47adfd26b77761b3098a629c2837c57766564736f6c63430008110033",
+  "deployedBytecode": "0x6080604052600436106100385760003560e01c80632e1a7d4d1461004157806358d9600c1461006a578063d0e30db0146100955761003f565b3661003f57005b005b34801561004d57600080fd5b5061006860048036038101906100639190610469565b61009f565b005b34801561007657600080fd5b5061007f610279565b60405161008c91906104d4565b60405180910390f35b61009d6102e3565b005b806000803373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020600001541015610123576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040161011a9061054c565b60405180910390fd5b806000803373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019081526020016000206000016000828254610174919061059b565b9250508190555060003373ffffffffffffffffffffffffffffffffffffffff16826040516101a190610600565b60006040518083038185875af1925050503d80600081146101de576040519150601f19603f3d011682016040523d82523d6000602084013e6101e3565b606091505b5050905080610227576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040161021e90610661565b60405180910390fd5b3373ffffffffffffffffffffffffffffffffffffffff167f47ed555d8b6242a89fcdab94795dc91c98a0e46db88f4a2b2bda3371956fd0d08360405161026d9190610690565b60405180910390a25050565b610281610414565b6000803373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060405180604001604052908160008201548152602001600182015481525050905090565b60003411610326576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040161031d906106f7565b60405180910390fd5b346000803373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060000160008282546103779190610717565b92505081905550426000803373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020600101819055503373ffffffffffffffffffffffffffffffffffffffff167f4de483450f36dd8489373cf9166b2260f09ae72422d836e12fd9565cec1cb91e3460405161040a9190610690565b60405180910390a2565b604051806040016040528060008152602001600081525090565b600080fd5b6000819050919050565b61044681610433565b811461045157600080fd5b50565b6000813590506104638161043d565b92915050565b60006020828403121561047f5761047e61042e565b5b600061048d84828501610454565b91505092915050565b61049f81610433565b82525050565b6040820160008201516104bb6000850182610496565b5060208201516104ce6020850182610496565b50505050565b60006040820190506104e960008301846104a5565b92915050565b600082825260208201905092915050565b7f4e6f7420656e6f7567682066756e647300000000000000000000000000000000600082015250565b60006105366010836104ef565b915061054182610500565b602082019050919050565b6000602082019050818103600083015261056581610529565b9050919050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052601160045260246000fd5b60006105a682610433565b91506105b183610433565b92508282039050818111156105c9576105c861056c565b5b92915050565b600081905092915050565b50565b60006105ea6000836105cf565b91506105f5826105da565b600082019050919050565b600061060b826105dd565b9150819050919050565b7f416e206572726f72206f63637572656400000000000000000000000000000000600082015250565b600061064b6010836104ef565b915061065682610615565b602082019050919050565b6000602082019050818103600083015261067a8161063e565b9050919050565b61068a81610433565b82525050565b60006020820190506106a56000830184610681565b92915050565b7f4e6f7420656e6f7567682066756e6473206465706f7369746564000000000000600082015250565b60006106e1601a836104ef565b91506106ec826106ab565b602082019050919050565b60006020820190508181036000830152610710816106d4565b9050919050565b600061072282610433565b915061072d83610433565b92508282019050808211156107455761074461056c565b5b9291505056fea2646970667358221220f8f86391edc3111918f1a3cf2e35d47adfd26b77761b3098a629c2837c57766564736f6c63430008110033",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [
+      {
+        "astId": 11,
+        "contract": "contracts/Bank.sol:Bank",
+        "label": "accounts",
+        "offset": 0,
+        "slot": "0",
+        "type": "t_mapping(t_address,t_struct(Account)6_storage)"
+      }
+    ],
+    "types": {
+      "t_address": {
+        "encoding": "inplace",
+        "label": "address",
+        "numberOfBytes": "20"
+      },
+      "t_mapping(t_address,t_struct(Account)6_storage)": {
+        "encoding": "mapping",
+        "key": "t_address",
+        "label": "mapping(address => struct Bank.Account)",
+        "numberOfBytes": "32",
+        "value": "t_struct(Account)6_storage"
+      },
+      "t_struct(Account)6_storage": {
+        "encoding": "inplace",
+        "label": "struct Bank.Account",
+        "members": [
+          {
+            "astId": 3,
+            "contract": "contracts/Bank.sol:Bank",
+            "label": "balance",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 5,
+            "contract": "contracts/Bank.sol:Bank",
+            "label": "lastDeposit",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_uint256"
+          }
+        ],
+        "numberOfBytes": "64"
+      },
+      "t_uint256": {
+        "encoding": "inplace",
+        "label": "uint256",
+        "numberOfBytes": "32"
+      }
+    }
+  }
+}

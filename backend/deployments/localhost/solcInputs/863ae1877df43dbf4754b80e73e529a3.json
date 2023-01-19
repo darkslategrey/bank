@@ -1,0 +1,35 @@
+{
+  "language": "Solidity",
+  "sources": {
+    "contracts/Bank.sol": {
+      "content": "// SPDX-License-Identifier: UNLICENSED\npragma solidity ^0.8.17;\n\ncontract Bank {\n\n    struct Account {\n        uint balance;\n        uint lastDeposit;\n    }\n\n    mapping(address => Account) accounts;\n\n    event etherDeposited(address indexed account, uint amount);\n    event etherWithdrawed(address indexed account, uint amount);\n\n    function getBalanceAndLastDeposit() external view returns(Account memory) {\n        return accounts[msg.sender];\n    }\n\n    function withdraw(uint _amount) external {\n        // int rest = int(accounts[msg.sender].balance) - int(_amount);\n        // require(rest >= 0, \"Not enough funds\");\n        //OU \n        require(accounts[msg.sender].balance >= _amount, \"Not enough funds\");\n        accounts[msg.sender].balance -= _amount;\n        (bool received, ) = msg.sender.call{value: _amount}(\"\");\n        require(received, \"An error occured\");\n        emit etherWithdrawed(msg.sender, _amount);\n    }\n\n    function deposit() external payable {\n        require(msg.value > 0, \"Not enough funds deposited\");\n        accounts[msg.sender].balance += msg.value;\n        accounts[msg.sender].lastDeposit = block.timestamp;\n        emit etherDeposited(msg.sender, msg.value);\n    }\n\n    fallback() external payable {}\n\n    receive() external payable {}\n}\n"
+    }
+  },
+  "settings": {
+    "optimizer": {
+      "enabled": false,
+      "runs": 200
+    },
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers",
+          "metadata",
+          "devdoc",
+          "userdoc",
+          "storageLayout",
+          "evm.gasEstimates"
+        ],
+        "": [
+          "ast"
+        ]
+      }
+    },
+    "metadata": {
+      "useLiteralContent": true
+    }
+  }
+}
