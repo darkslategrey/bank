@@ -1,12 +1,14 @@
+import { useState, useEffect } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import { Inter } from "@next/font/google";
 import styles from "@/styles/Home.module.css";
-import { useState } from "react";
 import { Input, Button, ButtonGroup, FormControl } from "@chakra-ui/react";
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useContractEvent, useSigner, useAccount, useBalance, useContract } from 'wagmi'
 import artifact from '@/pages/Bank.json'
+import { ethers, utils, BigNumber, BigNumberish } from 'ethers'
+import Balance from '@/components/Balance'
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,11 +16,24 @@ const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3"
 
 const Logo = () => (<div>the logo</div>)
 
+// contract.on("etherDeposited", (account, amount) => {}
+// const Balance = ({data}) => {
+//   useEffect(() => {
+
+//   }, [data])
+
+//   return (
+//     <div>Balance: {data?.formatted} {data?.symbol}</div>
+//   )
+// }
+
+
 export default function Home() {
   const [deposit, setDeposit] = useState(0);
   const [withdrawAmount, setWithdrawAmount] = useState(0);
   const { address } = useAccount()
-  const { data, isError, isLoading } = useBalance({address: contractAddress})
+  // const { data, isError, isLoading } = useBalance({address: contractAddress})
+  // const [balance, setBalance] = useState(data?.formatted)
   const { data: signer, isSignerError, isSignerLoading } = useSigner()
   const contract = useContract({address: contractAddress, abi: artifact.abi, signerOrProvider: signer})
 
@@ -39,7 +54,8 @@ export default function Home() {
     abi: artifact.abi,
     eventName: 'etherDeposited',
     listener(node, resolver) {
-      console.log('deposit', node, resolver)
+      console.log('deposit', BigNumber.from(resolver._hex))
+      // console.log({node, resolver})
     },
   })
 
@@ -53,17 +69,12 @@ export default function Home() {
   })
 
 
-  // contract.on("etherDeposited", (account, amount) => {}
-  const Balance = () => {
-    console.log({data})
-    return (
-      <div>Balance: {data?.formatted} {data?.symbol}</div>
-    )
-  }
-
   const sendDeposit = async () => {
     console.log("you deposit", deposit)
-    await contract.deposit({value: deposit})
+    const transaction = await contract.deposit({value: ethers.utils.parseEther(deposit)})
+    console.log({transaction})
+    await transaction.wait(1)
+    document.getElementById('deposit').value = ""
     setDeposit(0)
   }
 
@@ -71,6 +82,7 @@ export default function Home() {
     await contract.withdraw(withdrawAmount)
     setWithdrawAmount(0)
   }
+
   return (
     <>
       <Head>
@@ -82,10 +94,10 @@ export default function Home() {
       <Logo/>
       <ConnectButton />
       <div>Bank DAPP</div>
-    { (isLoading && <div>loading...</div>) || <Balance /> }
+      <Balance address={contractAddress} />
       <h2>Deposit</h2>
       <FormControl >
-        <Input placeholder='Amount' onChange={(e) => setDeposit(e.target.value)}/>
+        <Input id="deposit" placeholder='Amount' onChange={(e) => setDeposit(e.target.value)}/>
         <Button onClick={sendDeposit}>Deposit</Button>
       </FormControl>
       <h2>Withdraw</h2>
