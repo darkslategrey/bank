@@ -4,9 +4,11 @@ import { Inter } from "@next/font/google";
 import styles from "@/styles/Home.module.css";
 import { useState } from "react";
 import { Button, ButtonGroup } from "@chakra-ui/react";
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 const inter = Inter({ subsets: ["latin"] });
 
+const Logo = () => (<div>the logo</div>)
 export default function Home() {
   const [number, setNumber] = useState(0);
 
@@ -18,6 +20,8 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <Logo/>
+      <ConnectButton />
     </>
   );
 }
