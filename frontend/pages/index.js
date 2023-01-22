@@ -9,6 +9,7 @@ import { useContractEvent, useSigner, useAccount, useBalance, useContract } from
 import artifact from '@/pages/Bank.json'
 import { ethers, utils, BigNumber, BigNumberish } from 'ethers'
 import Balance from '@/components/Balance'
+import Layout from '@/components/Layout'
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -35,10 +36,10 @@ export default function Home() {
   // const { data, isError, isLoading } = useBalance({address: contractAddress})
   // const [balance, setBalance] = useState(data?.formatted)
   const { data: signer, isSignerError, isSignerLoading } = useSigner()
-  const contract = useContract({address: contractAddress, abi: artifact.abi, signerOrProvider: signer})
+  const contract = useContract({ address: contractAddress, abi: artifact.abi, signerOrProvider: signer })
 
 
- //Get All the Events
+  //Get All the Events
   //       let filter = {
   //           address: contractAddress,
   //           fromBlock: 0
@@ -71,15 +72,17 @@ export default function Home() {
 
   const sendDeposit = async () => {
     console.log("you deposit", deposit)
-    const transaction = await contract.deposit({value: ethers.utils.parseEther(deposit)})
-    console.log({transaction})
+    const transaction = await contract.deposit({ value: ethers.utils.parseEther(deposit) })
+    console.log({ transaction })
     await transaction.wait(1)
     document.getElementById('deposit').value = ""
     setDeposit(0)
   }
 
   const withdraw = async () => {
-    await contract.withdraw(withdrawAmount)
+    const transax = await contract.withdraw(ethers.utils.parseEther(withdrawAmount))
+    transax.wait(1)
+    document.getElementById('withdraw').value = ""
     setWithdrawAmount(0)
   }
 
@@ -91,22 +94,25 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Logo/>
-      <ConnectButton />
-      <div>Bank DAPP</div>
-      <Balance address={contractAddress} />
-      <h2>Deposit</h2>
-      <FormControl >
-        <Input id="deposit" placeholder='Amount' onChange={(e) => setDeposit(e.target.value)}/>
-        <Button onClick={sendDeposit}>Deposit</Button>
-      </FormControl>
-      <h2>Withdraw</h2>
-      <FormControl >
-        <Input placeholder='Amount' onChange={(e) => setWithdrawAmount(e.target.value)}/>
-        <Button onClick={withdraw}>Withdraw</Button>
-      </FormControl>
+      <Layout>
+        <Logo />
+        <ConnectButton />
+        <div>Bank DAPP</div>
+        <Balance address={contractAddress} />
+        <h2>Deposit</h2>
+        <FormControl >
+          <Input id="deposit" placeholder='Amount' onChange={(e) => setDeposit(e.target.value)} />
+          <Button onClick={sendDeposit}>Deposit</Button>
+        </FormControl>
+        <h2>Withdraw</h2>
+        <FormControl >
+          <Input placeholder='Amount' id="withdraw" onChange={(e) => setWithdrawAmount(e.target.value)} />
+          <Button onClick={withdraw}>Withdraw</Button>
+        </FormControl>
 
-      <h2>Last events</h2>
+        <h2>Last events</h2>
+
+      </Layout>
     </>
   );
 }

@@ -14,6 +14,7 @@ const Balance = ({address}) => {
   if (isLoading) return <div>Fetching balance…</div>
   if (isError) return <div>Error fetching balance</div>
 
+  document.getElementById("boom")
 
   return (
     <div>
